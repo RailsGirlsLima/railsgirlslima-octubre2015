@@ -1,10 +1,11 @@
 class TagsController < ApplicationController
+  before_action :set_idea
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.all
+    @tags = @idea.tags.all
   end
 
   # GET /tags/1
@@ -14,7 +15,7 @@ class TagsController < ApplicationController
 
   # GET /tags/new
   def new
-    @tag = Tag.new
+    @tag = @idea.tags.new
   end
 
   # GET /tags/1/edit
@@ -24,11 +25,11 @@ class TagsController < ApplicationController
   # POST /tags
   # POST /tags.json
   def create
-    @tag = Tag.new(tag_params)
+    @tag = @idea.tags.new(tag_params)
 
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to @tag, notice: 'Tag was successfully created.' }
+        format.html { redirect_to @idea, notice: 'Tag was successfully created.' }
         format.json { render :show, status: :created, location: @tag }
       else
         format.html { render :new }
@@ -64,9 +65,12 @@ class TagsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tag
-      @tag = Tag.find(params[:id])
+      @tag = @idea.tags.find(params[:id])
     end
 
+    def set_idea
+      @idea = Idea.find(params[:idea_id])
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
       params.require(:tag).permit(:idea_id, :name)
