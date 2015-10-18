@@ -1,4 +1,5 @@
 class Idea < ActiveRecord::Base
+  has_many :tags
   mount_uploader :picture, PictureUploader
   validates :name, presence: true
 
@@ -9,6 +10,7 @@ class Idea < ActiveRecord::Base
   def descripcion
     description.downcase
   end
+
 
 
 end
