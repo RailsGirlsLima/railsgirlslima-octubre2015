@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :tags
+
   get 'pages/info'
 
   root :to => redirect('/ideas')
